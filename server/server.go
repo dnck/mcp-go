@@ -77,7 +77,7 @@ func ClientSessionFromContext(ctx context.Context) ClientSession {
 // fails on the request.
 type UnparsableMessageError struct {
 	message json.RawMessage
-	method  mcp.MCPMethod
+	method  mcp.Method
 	err     error
 }
 
@@ -93,7 +93,7 @@ func (e *UnparsableMessageError) GetMessage() json.RawMessage {
 	return e.message
 }
 
-func (e *UnparsableMessageError) GetMethod() mcp.MCPMethod {
+func (e *UnparsableMessageError) GetMethod() mcp.Method {
 	return e.method
 }
 

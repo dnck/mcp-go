@@ -32,13 +32,13 @@ func NewMCPServer() *server.MCPServer {
 
 	hooks := &server.Hooks{}
 
-	hooks.AddBeforeAny(func(ctx context.Context, id any, method mcp.MCPMethod, message any) {
+	hooks.AddBeforeAny(func(ctx context.Context, id any, method mcp.Method, message any) {
 		fmt.Printf("beforeAny: %s, %v, %v\n", method, id, message)
 	})
-	hooks.AddOnSuccess(func(ctx context.Context, id any, method mcp.MCPMethod, message any, result any) {
+	hooks.AddOnSuccess(func(ctx context.Context, id any, method mcp.Method, message any, result any) {
 		fmt.Printf("onSuccess: %s, %v, %v, %v\n", method, id, message, result)
 	})
-	hooks.AddOnError(func(ctx context.Context, id any, method mcp.MCPMethod, message any, err error) {
+	hooks.AddOnError(func(ctx context.Context, id any, method mcp.Method, message any, err error) {
 		fmt.Printf("onError: %s, %v, %v, %v\n", method, id, message, err)
 	})
 	hooks.AddBeforeInitialize(func(ctx context.Context, id any, message *mcp.InitializeRequest) {

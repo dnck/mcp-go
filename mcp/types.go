@@ -8,44 +8,44 @@ import (
 	"github.com/yosida95/uritemplate/v3"
 )
 
-type MCPMethod string
+type Method string
 
 const (
-	// Initiates connection and negotiates protocol capabilities.
+	// MethodInitialize Initiates connection and negotiates protocol capabilities.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/basic/lifecycle/#initialization
-	MethodInitialize MCPMethod = "initialize"
+	MethodInitialize Method = "initialize"
 
-	// Verifies connection liveness between client and server.
+	// MethodPing Verifies connection liveness between client and server.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/basic/utilities/ping/
-	MethodPing MCPMethod = "ping"
+	MethodPing Method = "ping"
 
-	// Lists all available server resources.
+	// MethodResourcesList Lists all available server resources.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/server/resources/
-	MethodResourcesList MCPMethod = "resources/list"
+	MethodResourcesList Method = "resources/list"
 
-	// Provides URI templates for constructing resource URIs.
+	// MethodResourcesTemplatesList Provides URI templates for constructing resource URIs.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/server/resources/
-	MethodResourcesTemplatesList MCPMethod = "resources/templates/list"
+	MethodResourcesTemplatesList Method = "resources/templates/list"
 
-	// Retrieves content of a specific resource by URI.
+	// MethodResourcesRead Retrieves content of a specific resource by URI.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/server/resources/
-	MethodResourcesRead MCPMethod = "resources/read"
+	MethodResourcesRead Method = "resources/read"
 
-	// Lists all available prompt templates.
+	// MethodPromptsList Lists all available prompt templates.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/server/prompts/
-	MethodPromptsList MCPMethod = "prompts/list"
+	MethodPromptsList Method = "prompts/list"
 
-	// Retrieves a specific prompt template with filled parameters.
+	// MethodPromptsGet Retrieves a specific prompt template with filled parameters.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/server/prompts/
-	MethodPromptsGet MCPMethod = "prompts/get"
+	MethodPromptsGet Method = "prompts/get"
 
-	// Lists all available executable tools.
+	// MethodToolsList Lists all available executable tools.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/server/tools/
-	MethodToolsList MCPMethod = "tools/list"
+	MethodToolsList Method = "tools/list"
 
-	// Invokes a specific tool with provided parameters.
+	// MethodToolsCall Invokes a specific tool with provided parameters.
 	// https://spec.modelcontextprotocol.io/specification/2024-11-05/server/tools/
-	MethodToolsCall MCPMethod = "tools/call"
+	MethodToolsCall Method = "tools/call"
 )
 
 type URITemplate struct {
@@ -99,6 +99,11 @@ type Request struct {
 			ProgressToken ProgressToken `json:"progressToken,omitempty"`
 		} `json:"_meta,omitempty"`
 	} `json:"params,omitempty"`
+}
+
+func (r *Request) String() string {
+	b, _ := json.Marshal(r)
+	return string(b)
 }
 
 type Params map[string]interface{}
@@ -201,6 +206,11 @@ type JSONRPCResponse struct {
 	Result  interface{} `json:"result"`
 }
 
+func (r *JSONRPCResponse) String() string {
+	b, _ := json.Marshal(r)
+	return string(b)
+}
+
 // JSONRPCError represents a non-successful (error) response to a request.
 type JSONRPCError struct {
 	JSONRPC string    `json:"jsonrpc"`
@@ -272,6 +282,11 @@ type InitializeRequest struct {
 		Capabilities    ClientCapabilities `json:"capabilities"`
 		ClientInfo      Implementation     `json:"clientInfo"`
 	} `json:"params"`
+}
+
+func (ir *InitializeRequest) String() string {
+	b, _ := json.Marshal(ir)
+	return string(b)
 }
 
 // InitializeResult is sent after receiving an initialize request from the

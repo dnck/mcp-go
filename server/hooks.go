@@ -16,11 +16,11 @@ type OnUnregisterSessionHookFunc func(ctx context.Context, session ClientSession
 
 // BeforeAnyHookFunc is a function that is called after the request is
 // parsed but before the method is called.
-type BeforeAnyHookFunc func(ctx context.Context, id any, method mcp.MCPMethod, message any)
+type BeforeAnyHookFunc func(ctx context.Context, id any, method mcp.Method, message any)
 
 // OnSuccessHookFunc is a hook that will be called after the request
 // successfully generates a result, but before the result is sent to the client.
-type OnSuccessHookFunc func(ctx context.Context, id any, method mcp.MCPMethod, message any, result any)
+type OnSuccessHookFunc func(ctx context.Context, id any, method mcp.Method, message any, result any)
 
 // OnErrorHookFunc is a hook that will be called when an error occurs,
 // either during the request parsing or the method execution.
@@ -28,7 +28,7 @@ type OnSuccessHookFunc func(ctx context.Context, id any, method mcp.MCPMethod, m
 // Example usage:
 // ```
 //
-//	hooks.AddOnError(func(ctx context.Context, id any, method mcp.MCPMethod, message any, err error) {
+//	hooks.AddOnError(func(ctx context.Context, id any, method mcp.Method, message any, err error) {
 //	  // Check for specific error types using errors.Is
 //	  if errors.Is(err, ErrUnsupported) {
 //	    // Handle capability not supported errors
@@ -55,7 +55,7 @@ type OnSuccessHookFunc func(ctx context.Context, id any, method mcp.MCPMethod, m
 //	    log.Printf("Tool not found: %v", err)
 //	  }
 //	})
-type OnErrorHookFunc func(ctx context.Context, id any, method mcp.MCPMethod, message any, err error)
+type OnErrorHookFunc func(ctx context.Context, id any, method mcp.Method, message any, err error)
 
 type OnBeforeInitializeFunc func(ctx context.Context, id any, message *mcp.InitializeRequest)
 type OnAfterInitializeFunc func(ctx context.Context, id any, message *mcp.InitializeRequest, result *mcp.InitializeResult)
@@ -130,7 +130,7 @@ func (c *Hooks) AddOnSuccess(hook OnSuccessHookFunc) {
 // // Register hook to capture and inspect errors
 // hooks := &Hooks{}
 //
-//	hooks.AddOnError(func(ctx context.Context, id any, method mcp.MCPMethod, message any, err error) {
+//	hooks.AddOnError(func(ctx context.Context, id any, method mcp.Method, message any, err error) {
 //	    // For capability-related errors
 //	    if errors.Is(err, ErrUnsupported) {
 //	        // Handle capability not supported
@@ -167,7 +167,7 @@ func (c *Hooks) AddOnError(hook OnErrorHookFunc) {
 	c.OnError = append(c.OnError, hook)
 }
 
-func (c *Hooks) beforeAny(ctx context.Context, id any, method mcp.MCPMethod, message any) {
+func (c *Hooks) beforeAny(ctx context.Context, id any, method mcp.Method, message any) {
 	if c == nil {
 		return
 	}
@@ -176,7 +176,7 @@ func (c *Hooks) beforeAny(ctx context.Context, id any, method mcp.MCPMethod, mes
 	}
 }
 
-func (c *Hooks) onSuccess(ctx context.Context, id any, method mcp.MCPMethod, message any, result any) {
+func (c *Hooks) onSuccess(ctx context.Context, id any, method mcp.Method, message any, result any) {
 	if c == nil {
 		return
 	}
@@ -199,7 +199,7 @@ func (c *Hooks) onSuccess(ctx context.Context, id any, method mcp.MCPMethod, mes
 // - ErrResourceNotFound: When a resource is not found
 // - ErrPromptNotFound: When a prompt is not found
 // - ErrToolNotFound: When a tool is not found
-func (c *Hooks) onError(ctx context.Context, id any, method mcp.MCPMethod, message any, err error) {
+func (c *Hooks) onError(ctx context.Context, id any, method mcp.Method, message any, err error) {
 	if c == nil {
 		return
 	}

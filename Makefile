@@ -4,6 +4,7 @@ help: ## The default task is help.
 .DEFAULT_GOAL := help
 
 examples: ## Build the examples
-	 go build -o sse_server examples/sse_server/main.go
-	 go build -o sse_client examples/sse_client/main.go
+	mkdir -p ./bin
+	go build -o ./bin/sse_server examples/sse_server/main.go
+	go build -o ./bin/sse_client examples/sse_client/main.go
 

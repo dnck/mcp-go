@@ -58,6 +58,11 @@ type CallToolRequest struct {
 	} `json:"params"`
 }
 
+func (tc *CallToolRequest) String() string {
+	b, _ := json.Marshal(tc)
+	return string(b)
+}
+
 // ToolListChangedNotification is an optional notification from the server to
 // the client, informing it that the list of tools it offers has changed. This may
 // be issued by servers without any previous subscription from the client.

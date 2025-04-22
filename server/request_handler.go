@@ -20,9 +20,9 @@ func (s *MCPServer) HandleMessage(
 	var err *requestError
 
 	var baseMessage struct {
-		JSONRPC string        `json:"jsonrpc"`
-		Method  mcp.MCPMethod `json:"method"`
-		ID      any           `json:"id,omitempty"`
+		JSONRPC string     `json:"jsonrpc"`
+		Method  mcp.Method `json:"method"`
+		ID      any        `json:"id,omitempty"`
 		Result  any           `json:"result,omitempty"`
 	}
 
